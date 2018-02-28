@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import CalculationService from './services/CalculationService'
 
 class App extends Component {
+
+
+  componentDidMount() {
+    debugger;
+    //CalculationService.fetchData()
+  }
+
+
   render() {
     return (
       <div className="App">
