@@ -1,5 +1,5 @@
-class AddDeviseToAdminUsers < ActiveRecord::Migration[5.1]
-  def self.up
+class CreateActiveaAdminUsersAgain < ActiveRecord::Migration[5.1]
+  def change
     create_table :admin_users do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
