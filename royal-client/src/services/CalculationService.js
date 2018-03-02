@@ -5,7 +5,7 @@
 const CalculationService = {
   fetchData: () => {
     return fetch('http://localhost:3001/calculations')
-      .then(response => console.log(response.json()))
+      .then(response => response.json())
   }
 }
 

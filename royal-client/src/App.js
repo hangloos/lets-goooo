@@ -5,9 +5,17 @@ import CalculationService from './services/CalculationService'
 
 class App extends Component {
 
+  constructor() {
+    super()
+
+    this.state = {
+      data: []
+    }
+  }
+
 
   componentDidMount() {
-    CalculationService.fetchData()
+    CalculationService.fetchData().then(data => console.log(data))
   }
 
 
