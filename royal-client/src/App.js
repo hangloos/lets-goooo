@@ -7,8 +7,7 @@ class App extends Component {
 
 
   componentDidMount() {
-    debugger;
-    //CalculationService.fetchData()
+    CalculationService.fetchData()
   }
 
 

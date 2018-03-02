@@ -1,6 +1,7 @@
 class CalculationsController < ActionController::Base
 
   def index
+    #binding.pry
     @calculations = Calculation.all.as_json(include: [:routes])
     render json: @calculations
   end

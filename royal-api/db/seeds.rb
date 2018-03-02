@@ -5,4 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+#AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+5.times do |index|
+   Unit.create!(name: Faker::Beer.name, clean_time: rand(1...50))
+ end
+
+ 30.times do |index|
+   Location.create!(name: Faker::StarWars.character, address: Faker::Address.street_address, 
+     city: Faker::Address.city, zipcode: Faker::Address.zip)
+ end
