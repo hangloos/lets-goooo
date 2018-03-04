@@ -9,13 +9,15 @@ class App extends Component {
     super()
 
     this.state = {
-      data: []
+      data_details: []
     }
   }
 
 
   componentDidMount() {
-    CalculationService.fetchData().then(data => console.log(data))
+    CalculationService.fetchData().then(data => this.setState({
+      data_details: data
+    }))
   }
 
 
