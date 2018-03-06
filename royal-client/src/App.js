@@ -11,7 +11,8 @@ class App extends Component {
     super()
 
     this.state = {
-      data_details: []
+      data_details: [],
+      selectedCalculation: ""
     }
   }
 
@@ -23,6 +24,20 @@ class App extends Component {
   }
 
 
+  getApi()  {
+    debugger;
+    // send the locations to google api here
+    // origin_address
+    //destination_address
+    //time_count
+    //https://maps.googleapis.com/maps/api/directions/json?origin={origin_address}&destination={destination_address}&mode=driving&departure_time={time_count}&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8
+  }
+
+
+
+  ///https://maps.googleapis.com/maps/api/directions/json?origin=301 Hillwick Lane Schaumburg, IL 60193&destination=150  Thoma St, Chicago, IL 60642&mode=driving
+  //&departure_time=1516286542&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8
+
   render() {
     return (
       <div className="App">
@@ -32,7 +47,7 @@ class App extends Component {
         </header>
         <p className="App-intro">
 
-          <select>{this.state.data_details.map(x => <option>{x.name}</option>)}</select>
+          <select onChange={this.getApi.bind(this)}>{this.state.data_details.map(x => <option value={this.state.selectedCalculation}>{x.name}</option>)}</select>
         </p>
       </div>
     );
