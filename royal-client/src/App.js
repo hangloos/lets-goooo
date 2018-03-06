@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
-import CalculationService from './services/CalculationService'
+import CalculationsService from './services/CalculationsService'
+import Calculation from './Calculation.js'
+import Select from 'react-select';
 
 class App extends Component {
 
@@ -14,8 +16,8 @@ class App extends Component {
   }
 
 
-  componentDidMount() {
-    CalculationService.fetchData().then(data => this.setState({
+  componentWillMount() {
+    CalculationsService.fetchData().then(data => this.setState({
       data_details: data
     }))
   }
@@ -26,10 +28,11 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to Royal Flush</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+
+          <select>{this.state.data_details.map(x => <option>{x.name}</option>)}</select>
         </p>
       </div>
     );

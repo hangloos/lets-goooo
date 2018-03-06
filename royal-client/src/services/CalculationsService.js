@@ -2,11 +2,11 @@
 // console.log(API_URL);
 
 
-const CalculationService = {
+const CalculationsService = {
   fetchData: () => {
     return fetch('http://localhost:3001/calculations')
       .then(response => response.json())
   }
 }
 
-export default CalculationService;
+export default CalculationsService;
