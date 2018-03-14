@@ -33,10 +33,16 @@ class App extends Component {
     //https://maps.googleapis.com/maps/api/directions/json?origin={origin_address}&destination={destination_address}&mode=driving&departure_time={time_count}&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8
   }
 
+  selectedItem(item)  {
+    debugger
+  }
+
 
 
   ///https://maps.googleapis.com/maps/api/directions/json?origin=301 Hillwick Lane Schaumburg, IL 60193&destination=150  Thoma St, Chicago, IL 60642&mode=driving
   //&departure_time=1516286542&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8
+  //<select onChange={this.getApi.bind(this)}>{this.state.data_details.map(x => <option value={this.state.selectedCalculation}>{x.name}</option>)}</select>
+  //<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
 
   render() {
     return (
@@ -46,8 +52,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Royal Flush</h1>
         </header>
         <p className="App-intro">
-
-          <select onChange={this.getApi.bind(this)}>{this.state.data_details.map(x => <option value={this.state.selectedCalculation}>{x.name}</option>)}</select>
+          {this.state.data_details.map(x => <button value={x} onClick={this.selectedItem.bind(this,x)}>{x.name}</button>)}
         </p>
       </div>
     );
