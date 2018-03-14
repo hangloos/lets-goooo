@@ -12,7 +12,8 @@ class App extends Component {
 
     this.state = {
       data_details: [],
-      selectedCalculation: ""
+      selectedCalculation: "",
+      google: []
     }
   }
 
@@ -41,20 +42,28 @@ class App extends Component {
       cities[i] = item.routes[i].location.city
       zipcodes[i] = item.routes[i].location.zipcode
     }
-    debugger
+    const options = {
+     method: 'GET',
+     headers: new Headers({'content-type': 'application/json'}),
+     mode: 'no-cors'
+   }
     //need this to be the time choosen
     var time_data = new Date() * 1
     var calculation_numbers = []
-    for (var i = 0; i < 1;i++) {
-      fetch('https://maps.googleapis.com/maps/api/directions/json?origin='+addresses[i]+cities[i]+zipcodes[i]+'&destination='+addresses[i+1]+cities[i+1]+zipcodes[i+1]+'&mode=driving&departure_time='+time_data+'&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8')
-        .then(function (response) {
-          console.log(response)
-          //calculation_numbers[i] = response
-        })
+    //for (var i = 0; i < 1;i++) {
+      fetch('https://maps.googleapis.com/maps/api/directions/json?origin='+addresses[0]+cities[0]+zipcodes[0]+'&destination='+addresses[1]+cities[1]+zipcodes[1]+'&mode=driving&departure_time='+time_data+'&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8', options)
+        .then(response => response.json())
+        .then(data => {
+              this.setState({ google: data })
+            })
+          .catch(function(err) {
+           console.log(err) 
+          })
 
-    }
-    
   }
+  
+//application/x-www-form-urlencoded
+
 
 //   var url = 'https://example.com/profile';
 // var data = {username: 'example'};
