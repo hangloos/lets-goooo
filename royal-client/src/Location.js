@@ -15,6 +15,8 @@ class Location extends Component {
 
 
   componentWillReceiveProps(nextProps) {
+    //debugger
+    var details = nextProps.data
     this.setState({
       data: nextProps
     })
@@ -24,9 +26,12 @@ class Location extends Component {
 // if there is not then its nothing
 
   render() {
+    const dataCount = this.state.data
+
+    const dataInformation = dataCount.length <= 0 ? ("No Data") : (this.state.data.data)
+    //debugger
     return (
       <div >
-        {this.state.data.data}
       </div>
     );
   }

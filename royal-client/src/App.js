@@ -5,6 +5,8 @@ import CalculationsService from './services/CalculationsService';
 import Calculation from './Calculation.js';
 import Select from 'react-select';
 import Location from './Location.js';
+//import Request from 'superagent';
+import fetchJsonp from 'fetch-jsonp'
 
 class App extends Component {
 
@@ -13,8 +15,8 @@ class App extends Component {
 
     this.state = {
       data_details: [],
-      selectedCalculation: [],
-      google: []
+      google: [],
+      selectedCalculation: []
     }
   }
 
@@ -23,15 +25,6 @@ class App extends Component {
     CalculationsService.fetchData().then(data => this.setState({
       data_details: data
     }))
-  }
-
-
-  getApi()  {
-    debugger;
-    // send the locations to google api here
-    // origin_address
-    //destination_address
-    //time_count
   }
 
   selectedItem(item)  {
@@ -43,24 +36,22 @@ class App extends Component {
     for (var i = 0; i < item.routes.length; i++)  {
       //debugger
       var placeholder = [
+        i,
         item.routes[i].location.address,
         item.routes[i].location.city,
         item.routes[i].location.zipcode
         ]
       addresses.push(placeholder)
+      //addresses[i] = placeholder
       //addresses[i] = item.routes[i].location.address
       // cities[i] = item.routes[i].location.city
       // zipcodes[i] = item.routes[i].location.zipcode
     }
-
+     //debugger
     this.setState({
       selectedCalculation: addresses
     })
-   //  const options = {
-   //   method: 'GET',
-   //   headers: new Headers({'content-type': 'application/json'}),
-   //   mode: 'no-cors'
-   // }
+  
    //  //need this to be the time choosen
    //  var time_data = new Date() * 1
    //  var calculation_numbers = []
@@ -74,6 +65,29 @@ class App extends Component {
    //         console.log(err) 
    //        })
 
+  }
+
+//http://open.mapquestapi.com/directions/v2/route?key=AgRGMAVG5BryzbSj6Dgw237kJoddHNaz&from=301 Hillwick Lane Schaumburg 60193&to=1509 W Thomas St Chicago 60642
+
+  getGoogleData(address) {
+   // debugger
+
+    var time_data = new Date() * 1
+    var first_address = this.state.selectedCalculation[address[0]-1][1] + ", " + this.state.selectedCalculation[address[0]-1][2]+ " "+ this.state.selectedCalculation[address[0]-1][3]
+    var second_address = address[1] + ", " + address[2] + " " + address[3]
+    //debugger
+    var url =  "https://maps.googleapis.com/maps/api/directions/json?origin=" + first_address + "&destination=" + second_address + "&mode=driving&departure_time=" + time_data + "&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8"
+     const options = {
+     method: 'GET',
+     headers: new Headers({'content-type': 'application/json'}),
+     
+    }
+    fetchJsonp("http://www.mapquestapi.com/directions/v2/optimizedroute?key=AgRGMAVG5BryzbSj6Dgw237kJoddHNaz&json={%22locations%22:[%22301%20Hillwick%20Lane%20Schaumburg%2060193%22,%20%221509%20W%20Thomas%20St%20Chicago%2060642%22]}")
+      .then(response => response.json())
+      .then( data => {
+        console.log(data.route.realTime)
+      })
+ 
   }
   
 //application/x-www-form-urlencoded
@@ -94,8 +108,7 @@ class App extends Component {
 
 
 
-  ///https://maps.googleapis.com/maps/api/directions/json?origin=301 Hillwick Lane Schaumburg, IL 60193&destination=150  Thoma St, Chicago, IL 60642&mode=driving
-  //&departure_time=1516286542&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8
+ 
   //<select onChange={this.getApi.bind(this)}>{this.state.data_details.map(x => <option value={this.state.selectedCalculation}>{x.name}</option>)}</select>
   //<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
 
@@ -111,9 +124,8 @@ class App extends Component {
         </p>
         <div>
           <Location data={this.state.selectedCalculation} />
+          {this.state.selectedCalculation.map(address => <button value={address[1]} onClick={this.getGoogleData.bind(this,address)}>{address[1]}</button>)}
         </div>
-
-
       </div>
     );
   }
