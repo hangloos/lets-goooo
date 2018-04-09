@@ -70,23 +70,40 @@ class App extends Component {
 //http://open.mapquestapi.com/directions/v2/route?key=AgRGMAVG5BryzbSj6Dgw237kJoddHNaz&from=301 Hillwick Lane Schaumburg 60193&to=1509 W Thomas St Chicago 60642
 
   getGoogleData(address) {
-   // debugger
+   //debugger
 
     var time_data = new Date() * 1
-    var first_address = this.state.selectedCalculation[address[0]-1][1] + ", " + this.state.selectedCalculation[address[0]-1][2]+ " "+ this.state.selectedCalculation[address[0]-1][3]
-    var second_address = address[1] + ", " + address[2] + " " + address[3]
-    //debugger
-    var url =  "https://maps.googleapis.com/maps/api/directions/json?origin=" + first_address + "&destination=" + second_address + "&mode=driving&departure_time=" + time_data + "&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8"
-     const options = {
-     method: 'GET',
-     headers: new Headers({'content-type': 'application/json'}),
+
+    if (address[0] != 0) {
+
+      var first_address_start = this.state.selectedCalculation[address[0]-1][1] + ", " + this.state.selectedCalculation[address[0]-1][2]+ " "+ this.state.selectedCalculation[address[0]-1][3]
+      var second_address_start = address[1] + ", " + address[2] + " " + address[3]
+      var first_address = first_address_start.split(" ").join("%20").split(",").join("%22")
+      var second_address = second_address_start.split(" ").join("%20").split(",").join("%22")
+      var locations = {locations: [first_address,second_address]}
+      //%22 = "
+      // %20 = space 
+      //var url =  "https://maps.googleapis.com/maps/api/directions/json?origin=" + first_address + "&destination=" + second_address + "&mode=driving&departure_time=" + time_data + "&traffic_model=best_guess&key=AIzaSyAed6resi7KpjwSDNFzYCsnt5d89dwlGE8"
+        //var url = `http://www.mapquestapi.com/directions/v2/optimizedroute?key=AgRGMAVG5BryzbSj6Dgw237kJoddHNaz&json={locations:[${first_address},${second_address}]}`
+        //var url = `http://www.mapquestapi.com/directions/v2/optimizedroute?key=AgRGMAVG5BryzbSj6Dgw237kJoddHNaz&json=${locations}`
+        var url = "http://www.mapquestapi.com/directions/v2/optimizedroute?key=AgRGMAVG5BryzbSj6Dgw237kJoddHNaz&json={locations:[" + first_address + "," + second_address
+        //{"locations":["Denver,CO","Westminster,CO","Boulder,CO"]}
+        const options = {
+        method: 'GET',
+        headers: new Headers({'content-type': 'application/json'}),
      
-    }
-    fetchJsonp("http://www.mapquestapi.com/directions/v2/optimizedroute?key=AgRGMAVG5BryzbSj6Dgw237kJoddHNaz&json={%22locations%22:[%22301%20Hillwick%20Lane%20Schaumburg%2060193%22,%20%221509%20W%20Thomas%20St%20Chicago%2060642%22]}")
+      }
+      debugger
+      //"http://www.mapquestapi.com/directions/v2/optimizedroute?key=AgRGMAVG5BryzbSj6Dgw237kJoddHNaz&json={%22locations%22:[%22301%20Hillwick%20Lane%20Schaumburg%2060193%22,%20%221509%20W%20Thomas%20St%20Chicago%2060642%22]}"
+      fetchJsonp()
       .then(response => response.json())
       .then( data => {
         console.log(data.route.realTime)
       })
+
+
+    }
+
  
   }
   
